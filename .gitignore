@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated/temp images
+Generated Image*
+Generated_Image*
+WhatsApp Image*
+
+# Old versions
+V1/
+cakes and about us/
