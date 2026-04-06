@@ -127,11 +127,23 @@
 }
 
 .site-header--scrolled {
+  background: transparent;
+  box-shadow: 0 1px 0 rgba(91,33,182,0.08),
+              0 4px 20px rgba(91,33,182,0.06);
+}
+
+/* backdrop-filter must NOT be on the header itself — it creates a containing
+   block for position:fixed children (the nav overlay), breaking its inset:0
+   positioning. Use ::before so the blur is a visual layer only. */
+.site-header--scrolled::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: rgba(253,252,255,0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 1px 0 rgba(91,33,182,0.08),
-              0 4px 20px rgba(91,33,182,0.06);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .header-inner {
@@ -773,6 +785,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--purple-deep);
+  white-space: nowrap;
 }
 
 .brand-bar__item svg {
