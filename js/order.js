@@ -29,7 +29,7 @@ const TRANSITION_MESSAGES = {
 })();
 
 /* ── Step Navigation ────────────────────────────────────────── */
-function goToStep(targetStep) {
+function goToStep(targetStep, scroll) {
   const steps = document.querySelectorAll('.form-step');
   const dots = document.querySelectorAll('.step-dot');
   const msgEl = document.getElementById('transition-msg');
@@ -59,12 +59,14 @@ function goToStep(targetStep) {
 
   currentStep = targetStep;
 
-  // Scroll to top of form
-  const formWrap = document.getElementById('order-form-wrap');
-  if (formWrap) {
-    setTimeout(() => {
-      formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+  // Only scroll when navigating between steps, not on initial load
+  if (scroll) {
+    const formWrap = document.getElementById('order-form-wrap');
+    if (formWrap) {
+      setTimeout(() => {
+        formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
   }
 }
 
@@ -76,7 +78,7 @@ function goToStep(targetStep) {
   nextBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       if (currentStep < TOTAL_STEPS) {
-        goToStep(currentStep + 1);
+        goToStep(currentStep + 1, true);
       }
     });
   });
@@ -84,32 +86,35 @@ function goToStep(targetStep) {
   backBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       if (currentStep > 1) {
-        goToStep(currentStep - 1);
+        goToStep(currentStep - 1, true);
       }
     });
   });
 
-  // Initialize: show step 1
-  goToStep(1);
+  // Initialize: show step 1, no scroll
+  goToStep(1, false);
 })();
 
-/* ── Conditional: Show cake size only if Cake selected ──────── */
-(function initConditionalSize() {
-  const productRadios = document.querySelectorAll('[name="product-type"]');
-  const sizeRow = document.getElementById('size-row');
-  if (!productRadios.length || !sizeRow) return;
+/* ── Conditional fields based on product selection ──────────── */
+(function initConditionalFields() {
+  const productCheckboxes = document.querySelectorAll('[name="product-type"]');
+  const sizeRow     = document.getElementById('size-row');
+  const tiersRow    = document.getElementById('tiers-row');
+  const quantityRow = document.getElementById('quantity-row');
+  if (!productCheckboxes.length) return;
 
-  function updateSizeVisibility() {
-    const selected = document.querySelector('[name="product-type"]:checked');
-    if (selected && selected.value === 'cake') {
-      sizeRow.hidden = false;
-    } else {
-      sizeRow.hidden = true;
-    }
+  function updateFieldVisibility() {
+    const checked = Array.from(document.querySelectorAll('[name="product-type"]:checked')).map(c => c.value);
+    const hasCake     = checked.includes('Custom Cake');
+    const hasQuantity = checked.some(v => ['Cupcakes','Royal Icing Cookies','Treats (cakesicles / cake pops / donuts / macarons)'].includes(v));
+
+    if (sizeRow)     sizeRow.hidden     = !hasCake;
+    if (tiersRow)    tiersRow.hidden    = !hasCake;
+    if (quantityRow) quantityRow.hidden = !hasQuantity;
   }
 
-  productRadios.forEach(r => r.addEventListener('change', updateSizeVisibility));
-  updateSizeVisibility();
+  productCheckboxes.forEach(c => c.addEventListener('change', updateFieldVisibility));
+  updateFieldVisibility();
 })();
 
 /* ── WhatsApp Message Builder ───────────────────────────────── */
@@ -133,10 +138,11 @@ function collectFormData() {
   const occasion      = val('occasion-type');
   const eventDate     = val('event-date');
   const guests        = val('guest-count');
-  const productType   = checked('product-type');
+  const productType   = checkedBoxes('product-type').join(', ') || 'Not specified';
   const cakeSize      = val('cake-size');
   const flavours      = checkedBoxes('flavour').join(', ') || val('flavour-other') || 'Not specified';
   const tiers         = val('cake-tiers');
+  const quantity      = val('item-quantity');
   const budget        = val('budget');
   const colourTheme   = val('colour-theme');
   const designDesc    = val('design-description');
@@ -147,7 +153,7 @@ function collectFormData() {
   const notes         = val('final-notes');
 
   return { name, occasion, eventDate, guests, productType, cakeSize,
-           flavours, tiers, budget, colourTheme, designDesc, extras,
+           flavours, tiers, quantity, budget, colourTheme, designDesc, extras,
            inspiration, phone, collection, notes };
 }
 
@@ -159,9 +165,11 @@ function buildWhatsAppMessage(data) {
     `Occasion: ${data.occasion || 'Not specified'} on ${data.eventDate || 'TBC'}`,
     `Guests: ${data.guests || 'Not specified'}`,
     '',
-    `Product: ${data.productType || 'Not specified'}${data.cakeSize ? ' | ' + data.cakeSize : ''}`,
+    `Product: ${data.productType || 'Not specified'}`,
+    data.cakeSize   ? `Cake Size: ${data.cakeSize}` : '',
+    data.tiers      ? `Tiers: ${data.tiers}` : '',
+    data.quantity   ? `Quantity: ${data.quantity}` : '',
     `Flavour(s): ${data.flavours}`,
-    data.tiers ? `Tiers: ${data.tiers}` : '',
     `Budget: ${data.budget || 'Not specified'}`,
     '',
     `Colour Theme: ${data.colourTheme || 'Not specified'}`,
@@ -187,12 +195,12 @@ function buildWhatsAppMessage(data) {
     // Basic validation
     if (!data.name) {
       alert('Please enter your name in Step 1.');
-      goToStep(1);
+      goToStep(1, true);
       return;
     }
     if (!data.eventDate) {
       alert('Please enter your event date in Step 1.');
-      goToStep(1);
+      goToStep(1, true);
       return;
     }
     if (!data.phone) {

@@ -138,68 +138,88 @@
             </div>
           </div>
 
-          <!-- STEP 2: THE CAKE -->
+          <!-- STEP 2: YOUR ORDER -->
           <div class="form-step" id="step-2" hidden>
             <p class="form-step__eyebrow">Step 2 of 4</p>
-            <h2 class="form-step__title">The Cake</h2>
-            <p class="form-step__sub">What type of treat are you after? Choose as many as you like.</p>
+            <h2 class="form-step__title">Your Order</h2>
+            <p class="form-step__sub">What would you like? Tick everything that applies — you can order more than one item.</p>
 
-            <!-- Product Type -->
+            <!-- Product Type — CHECKBOXES (multi-select) -->
             <div class="form-group">
-              <label class="form-label">What Would You Like? *</label>
+              <label class="form-label">What Would You Like? * <span style="font-weight:400;color:var(--text-light);">(tick all that apply)</span></label>
               <div class="radio-cards">
                 <div class="radio-card">
-                  <input type="radio" name="product-type" id="type-cake" value="Custom Cake" checked>
+                  <input type="checkbox" name="product-type" id="type-cake" value="Custom Cake">
                   <label class="radio-card__label" for="type-cake">
-                    <span class="radio-card__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                    <span class="radio-card__icon">🎂</span>
                     <span class="radio-card__text">Custom Cake</span>
                   </label>
                 </div>
                 <div class="radio-card">
-                  <input type="radio" name="product-type" id="type-cupcakes" value="Cupcakes">
+                  <input type="checkbox" name="product-type" id="type-cupcakes" value="Cupcakes">
                   <label class="radio-card__label" for="type-cupcakes">
-                    <span class="radio-card__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                    <span class="radio-card__icon">🧁</span>
                     <span class="radio-card__text">Cupcakes</span>
                   </label>
                 </div>
                 <div class="radio-card">
-                  <input type="radio" name="product-type" id="type-cookies" value="Cookies">
+                  <input type="checkbox" name="product-type" id="type-cookies" value="Royal Icing Cookies">
                   <label class="radio-card__label" for="type-cookies">
-                    <span class="radio-card__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-                    <span class="radio-card__text">Cookies</span>
+                    <span class="radio-card__icon">🍪</span>
+                    <span class="radio-card__text">Royal Icing Cookies</span>
                   </label>
                 </div>
                 <div class="radio-card">
-                  <input type="radio" name="product-type" id="type-treats" value="Mixed Treats">
+                  <input type="checkbox" name="product-type" id="type-treats" value="Treats (cakesicles / cake pops / donuts / macarons)">
                   <label class="radio-card__label" for="type-treats">
-                    <span class="radio-card__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
-                    <span class="radio-card__text">Mixed Treats</span>
+                    <span class="radio-card__icon">🍭</span>
+                    <span class="radio-card__text">Treats</span>
+                    <span style="font-size:0.72rem;color:var(--text-light);display:block;margin-top:2px;">cakesicles · cake pops · donuts · macarons</span>
                   </label>
                 </div>
                 <div class="radio-card">
-                  <input type="radio" name="product-type" id="type-sweet-table" value="Full Sweet Table">
+                  <input type="checkbox" name="product-type" id="type-sweet-table" value="Full Sweet Table">
                   <label class="radio-card__label" for="type-sweet-table">
-                    <span class="radio-card__icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                    <span class="radio-card__icon">✨</span>
                     <span class="radio-card__text">Sweet Table</span>
+                    <span style="font-size:0.72rem;color:var(--text-light);display:block;margin-top:2px;">full event spread</span>
                   </label>
                 </div>
               </div>
             </div>
 
-            <!-- Cake Size (conditional) -->
-            <div class="form-group" id="size-row">
+            <!-- Cake Size — only shown when Custom Cake is ticked -->
+            <div class="form-group" id="size-row" hidden>
               <label class="form-label" for="cake-size">Cake Size</label>
               <select id="cake-size" name="cake-size" class="form-select">
                 <option value="">— Select size —</option>
-                <option value="12cm (6–8 people) — R250">12cm round — 6–8 people — R250</option>
-                <option value="15cm (10–12 people) — R300">15cm round — 10–12 people — R300</option>
-                <option value="18cm (14–16 people) — R400">18cm round — 14–16 people — R400</option>
-                <option value="20cm (18–22 people) — R550">20cm round — 18–22 people — R550</option>
-                <option value="25cm (25–30 people) — R650">25cm round — 25–30 people — R650</option>
-                <option value="30cm (35–40 people) — R750">30cm round — 35–40 people — R750</option>
-                <option value="40cm+ / Tiered (50+ people) — Quote required">40cm+ / Tiered — 50+ people — Quote required</option>
-                <option value="Not sure — please advise">Not sure — please advise</option>
+                <option value="12cm (serves 6–8) — R250">12cm round — serves 6–8 — R250</option>
+                <option value="15cm (serves 10–12) — R300">15cm round — serves 10–12 — R300</option>
+                <option value="18cm (serves 14–16) — R400">18cm round — serves 14–16 — R400</option>
+                <option value="20cm (serves 18–22) — R550">20cm round — serves 18–22 — R550</option>
+                <option value="25cm (serves 25–30) — R650">25cm round — serves 25–30 — R650</option>
+                <option value="30cm (serves 35–40) — R750">30cm round — serves 35–40 — R750</option>
+                <option value="40cm+ / Tiered (50+ people) — quote required">40cm+ / Tiered — 50+ people — quote required</option>
+                <option value="Not sure yet — please advise">Not sure yet — please advise</option>
               </select>
+            </div>
+
+            <!-- Tiers — only shown when Custom Cake is ticked -->
+            <div class="form-group" id="tiers-row" hidden>
+              <label class="form-label" for="cake-tiers">Number of Tiers</label>
+              <select id="cake-tiers" name="cake-tiers" class="form-select">
+                <option value="">— Select tiers —</option>
+                <option value="1 tier">1 tier</option>
+                <option value="2 tiers">2 tiers</option>
+                <option value="3 tiers">3 tiers</option>
+                <option value="4+ tiers">4+ tiers (quote required)</option>
+              </select>
+            </div>
+
+            <!-- Quantity — shown when cupcakes, cookies, or treats are ticked -->
+            <div class="form-group" id="quantity-row" hidden>
+              <label class="form-label" for="item-quantity">Approximate Quantity</label>
+              <input type="text" id="item-quantity" name="item-quantity" class="form-input" placeholder="e.g. 24 cupcakes, 12 cookies, 20 cakesicles">
             </div>
 
             <!-- Flavours -->
@@ -225,30 +245,18 @@
               </div>
             </div>
 
-            <div class="form-step-grid">
-              <div class="form-group">
-                <label class="form-label" for="cake-tiers">Number of Tiers</label>
-                <select id="cake-tiers" name="cake-tiers" class="form-select">
-                  <option value="">— Select tiers —</option>
-                  <option value="1 tier">1 tier</option>
-                  <option value="2 tiers">2 tiers</option>
-                  <option value="3 tiers">3 tiers</option>
-                  <option value="4+ tiers">4+ tiers</option>
-                  <option value="Not applicable">Not applicable</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="budget">Approximate Budget</label>
-                <select id="budget" name="budget" class="form-select">
-                  <option value="">— Select budget —</option>
-                  <option value="R250 – R500">R250 – R500</option>
-                  <option value="R500 – R800">R500 – R800</option>
-                  <option value="R800 – R1200">R800 – R1200</option>
-                  <option value="R1200 – R2000">R1200 – R2000</option>
-                  <option value="R2000+">R2000+</option>
-                  <option value="Not sure yet">Not sure yet</option>
-                </select>
-              </div>
+            <div class="form-group">
+              <label class="form-label" for="budget">Approximate Budget</label>
+              <select id="budget" name="budget" class="form-select">
+                <option value="">— Select budget —</option>
+                <option value="Under R200">Under R200</option>
+                <option value="R200 – R400">R200 – R400</option>
+                <option value="R400 – R700">R400 – R700</option>
+                <option value="R700 – R1200">R700 – R1200</option>
+                <option value="R1200 – R2000">R1200 – R2000</option>
+                <option value="R2000+">R2000+</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
             </div>
 
             <div class="form-nav">
