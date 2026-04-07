@@ -160,7 +160,7 @@
 }
 
 .logo-img {
-  height: 88px;
+  height: 127px;
   width: auto;
   object-fit: contain;
 }
@@ -194,8 +194,8 @@
 }
 
 .header-wa-btn {
-  padding: 0.65rem 1.4rem;
-  font-size: 0.88rem;
+  padding: 0.585rem 1.26rem;
+  font-size: 0.79rem;
   flex-shrink: 0;
 }
 
