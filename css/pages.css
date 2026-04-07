@@ -303,7 +303,7 @@ main {
 .about-hero {
   position: relative;
   height: 300px;
-  background: url('../images/about-gwensi.jpg') center 30% / cover no-repeat;
+  background: url('../images/cake-birthday-floral.jpg') center / cover no-repeat;
   background-color: var(--purple-deep);
 }
 
